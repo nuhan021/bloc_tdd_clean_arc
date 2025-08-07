@@ -1,36 +1,84 @@
+import 'package:bloc_tdd_arc/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../core/utils/core_utils/core_utils.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+  LoginScreen({super.key});
+
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  String token = '';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Login'),
-      ),
+      appBar: AppBar(title: Text('Login')),
 
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          TextField(
-            decoration: InputDecoration(
-              hintText: 'Email'
-            ),
+          TextField(controller: emailController,
+              decoration: InputDecoration(hintText: 'Email')),
+
+          SizedBox(height: 20),
+
+          TextField(controller: passwordController,
+              decoration: InputDecoration(hintText: 'Password')),
+
+          SizedBox(height: 20),
+
+
+          // example of using bloc with ui and custom logic
+          BlocConsumer<AuthCubit, AuthState>(
+            listener: (context, state) {
+              if (state is Error) {
+                CoreUtils.showSnackBar(
+                  context: context,
+                  message: state.message,
+                  statusCode: state.statusCode,
+                  backgroundColor: Colors.red,
+                );
+              } else if (state is LoggedIn) {
+                CoreUtils.showSnackBar(
+                  context: context,
+                  message: 'Login successfully',
+                  statusCode: 206,
+                  backgroundColor: Colors.purple,
+                );
+
+                token = state.user.token.toString();
+              }
+            },
+            builder: (context, state) {
+              if (state is AuthLoading) {
+                return CircularProgressIndicator();
+              }
+              return ElevatedButton(
+                onPressed: () {
+                  context.read<AuthCubit>().login(
+                    email: emailController.text.trim(),
+                    password: passwordController.text.trim(),
+                  );
+                },
+                child: Text('Login'),
+              );
+            },
           ),
 
-          SizedBox(height: 20,),
+          // example of using bloc with changing ui based on data
+          BlocBuilder<AuthCubit, AuthState>(
+            builder: (context, state) {
+              if(state is LoggedIn) {
+                token = state.user.token.toString();
+                return Text('The token is: $token');
+              }
+              return Text('Nothing to display');
+            }
+          )
 
-          TextField(
-            decoration: InputDecoration(
-                hintText: 'Password'
-            ),
-          ),
-          
-          
-          SizedBox(height: 20,),
-          
-          ElevatedButton(onPressed: (){}, child: Text('Login'))
         ],
       ),
     );

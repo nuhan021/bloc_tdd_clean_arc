@@ -1,7 +1,12 @@
+import 'package:bloc_tdd_arc/core/services/dependencies/injection_container.dart';
+import 'package:bloc_tdd_arc/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:bloc_tdd_arc/features/auth/presentation/views/login_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await init();
   runApp(const MyApp());
 }
 
@@ -31,7 +36,10 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const LoginScreen(),
+      home: BlocProvider(
+        create: (context) => sl<AuthCubit>(),
+        child: LoginScreen(),
+      ),
     );
   }
 }
