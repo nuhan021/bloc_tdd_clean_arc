@@ -10,8 +10,6 @@ class LoginScreen extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  String token = '';
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,8 +46,6 @@ class LoginScreen extends StatelessWidget {
                   statusCode: 206,
                   backgroundColor: Colors.purple,
                 );
-
-                token = state.user.token.toString();
               }
             },
             builder: (context, state) {
@@ -72,8 +68,7 @@ class LoginScreen extends StatelessWidget {
           BlocBuilder<AuthCubit, AuthState>(
             builder: (context, state) {
               if(state is LoggedIn) {
-                token = state.user.token.toString();
-                return Text('The token is: $token');
+                return Text('The token is: ${state.user.token.toString()}');
               }
               return Text('Nothing to display');
             }
