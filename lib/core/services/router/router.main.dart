@@ -2,7 +2,7 @@ part of 'router.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
-    case AppRoute.getLoginScreen:
+    case AppRoute.loginScreen:
       return _pageBuilder(
         (_) => BlocProvider(
           create: (context) => sl<AuthCubit>(),

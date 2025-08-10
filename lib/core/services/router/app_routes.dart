@@ -2,11 +2,10 @@ class AppRoute {
 
   // screen router
   // *** make private variable
-  static String _loginScreen = "/homeScreen";
+  static const String loginScreen = "/login";
 
-
-  // screen route getter function
-  static String getLoginScreen() => _loginScreen;
+  // Getter for login screen route
+  static String get getLoginScreen => loginScreen;
 
   
 }
