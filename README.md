@@ -128,4 +128,12 @@ If your team wants to extend or standardize additional modules (auth, networking
 
 ## 📜 License
 
-This project is open for your company’s internal use or private extension. Add your preferred license if required.
+Copyright (c) [2025] [Nuhan Chowdhury]
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including, without limitation, the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+...
